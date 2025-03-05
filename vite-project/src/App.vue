@@ -6,9 +6,14 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     
-
-      
-    
+    <div class="wrapper">
+      <nav>
+        <RouterLink to="/">Offensive Category</RouterLink>
+        <RouterLink to="/about">Motive</RouterLink>
+        <RouterLink to="/offense">Offense</RouterLink>
+      </nav>
+    </div>
+  
   </header>
 
   <RouterView />
