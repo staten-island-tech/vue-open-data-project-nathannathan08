@@ -13,17 +13,15 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 
-// Define your `hate` variable
 const hate = ref([]);
 
-// Fetch data from the API
 async function getData() {
   let res = await fetch("https://data.cityofnewyork.us/resource/bqiq-cu78.json");
   let data = await res.json();
   hate.value = data;
 }
 
-// Computed property to calculate and group offenses by category with counts
+
 const offenseCategoriesWithCounts = computed(() => {
   const offenseCounts = hate.value.reduce((acc, item) => {
     const category = item.offense_category || "Unknown"; 

@@ -1,6 +1,6 @@
 <template>
-    <div class="motive">
-      <h1>motive</h1>
+    <div class="offense">
+      <h1>offense</h1>
     </div>
   </template>
   
