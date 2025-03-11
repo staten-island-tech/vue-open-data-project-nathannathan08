@@ -14,13 +14,11 @@ import Chart from "chart.js/auto";
 const hate = ref([]);
 const motiveChart = ref(null);
 
-
 async function getData() {
   let res = await fetch("https://data.cityofnewyork.us/resource/bqiq-cu78.json");
   let data = await res.json();
   hate.value = data;
 }
-
 
 const MotivesWithCounts = computed(() => {
   const MotiveCounts = hate.value.reduce((acc, item) => {
@@ -56,7 +54,7 @@ const renderChart = () => {
         label: "Motive Counts",
         data: MotivesWithCounts.value.map(item => item.count),
         backgroundColor: ["#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#9B59B6", "#ff005d", "#7c00ba", "#007328", "#ff3300", "#63c6ff", "#4f4f4f", "#ff4f4f", "#eeff00"], // Customize colors
-        hoverOffset: 4
+        hoverOffset: 6
       }
     ]
   };

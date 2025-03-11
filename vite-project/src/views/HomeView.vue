@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>Hate Crime Data in NYC</h1>
-
     <ul>
       <li v-for="(item, index) in offenseCategoriesWithCounts" :key="index">
         <p>Offensive Category: {{ item.category }}, Count: {{ item.count }}</p>

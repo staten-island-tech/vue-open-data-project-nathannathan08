@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <h1>Hate Crime Data in NYC - Motive</h1>
+    <h1>Hate Crime Data in NYC - Offense</h1>
 
     <canvas id="offenseChart"></canvas>
   </div>
