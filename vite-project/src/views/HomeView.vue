@@ -58,4 +58,9 @@ p {
   font-size: 35px;
     
 }
+
+h1 {
+  color:rgb(133, 0, 11);
+  font-size: 50px;
+}
 </style>
