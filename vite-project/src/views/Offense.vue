@@ -16,10 +16,17 @@ const offenseChart = ref(null);
 
 
 async function getData() {
-  let res = await fetch("https://data.cityofnewyork.us/resource/bqiq-cu78.json");
-  let data = await res.json();
-  hate.value = data;
+  try {
+    let res = await fetch("https://data.cityofnewyork.us/resource/bqiq-cu78.json");
+    if (!res.ok) throw new Error("Failed to fetch data");
+    let data = await res.json();
+    hate.value = data;
+  } catch (error) {
+    console.error(error);
+    alert("Failed to fetch data");
+  }
 }
+
 
 
 const OffenseWithCounts = computed(() => {
@@ -118,4 +125,5 @@ p {
   font-size: 35px;
     
 }
+
 </style>

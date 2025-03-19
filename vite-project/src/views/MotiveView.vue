@@ -15,10 +15,17 @@ const hate = ref([]);
 const motiveChart = ref(null);
 
 async function getData() {
-  let res = await fetch("https://data.cityofnewyork.us/resource/bqiq-cu78.json");
-  let data = await res.json();
-  hate.value = data;
+  try {
+    let res = await fetch("https://data.cityofnewyork.us/resource/bqiq-cu78.json");
+    if (!res.ok) throw new Error("Failed to fetch data");
+    let data = await res.json();
+    hate.value = data;
+  } catch (error) {
+    console.error(error);
+    alert("Failed to fetch data");
+  }
 }
+
 
 const MotivesWithCounts = computed(() => {
   const MotiveCounts = hate.value.reduce((acc, item) => {
@@ -114,5 +121,9 @@ p {
   color: rgb(168, 0, 22);
   font-size: 35px;
     
+}
+h1 {
+  color:rgb(133, 0, 11);
+  font-size: 44px;
 }
 </style>

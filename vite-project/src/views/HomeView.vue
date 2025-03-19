@@ -15,10 +15,17 @@ import { ref, onMounted, computed } from "vue";
 const hate = ref([]);
 
 async function getData() {
-  let res = await fetch("https://data.cityofnewyork.us/resource/bqiq-cu78.json");
-  let data = await res.json();
-  hate.value = data;
+  try {
+    let res = await fetch("https://data.cityofnewyork.us/resource/bqiq-cu78.json");
+    if (!res.ok) throw new Error("Failed to fetch data");
+    let data = await res.json();
+    hate.value = data;
+  } catch (error) {
+    console.error(error);
+    alert("Failed to fetch data");
+  }
 }
+
 
 
 const offenseCategoriesWithCounts = computed(() => {
@@ -61,6 +68,6 @@ p {
 
 h1 {
   color:rgb(133, 0, 11);
-  font-size: 50px;
+  font-size: 44px;
 }
 </style>
