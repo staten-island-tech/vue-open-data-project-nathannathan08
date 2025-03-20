@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <h1>Hate Crime Data in NYC - Motive</h1>
@@ -26,7 +25,6 @@ async function getData() {
   }
 }
 
-
 const MotivesWithCounts = computed(() => {
   const MotiveCounts = hate.value.reduce((acc, item) => {
     const category = item.bias_motive_description || "Unknown";
@@ -52,7 +50,6 @@ const MotivesWithCounts = computed(() => {
   }));
 });
 
-
 const renderChart = () => {
   const chartData = {
     labels: MotivesWithCounts.value.map(item => item.bias_motive_description),
@@ -65,7 +62,6 @@ const renderChart = () => {
       }
     ]
   };
-
 
   motiveChart.value = new Chart(document.getElementById("motiveChart"), {
     type: "pie",

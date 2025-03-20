@@ -3,6 +3,12 @@
   <div>
     <h1>Hate Crime Data in NYC - Offense</h1>
 
+   
+    <select v-model="selectedCategory" @change="updateChart">
+      <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
+      <option value="All">All Categories</option>
+    </select>
+
     <canvas id="offenseChart"></canvas>
   </div>
 </template>
@@ -13,7 +19,17 @@ import Chart from "chart.js/auto";
 
 const hate = ref([]);
 const offenseChart = ref(null);
+const selectedCategory = ref("All");
 
+
+const categories = [
+  "Religion/Religious Practice",
+  "Sexual Orientation",
+  "Race/Color",
+  "Gender",
+  "Ethnicity/National Origin/Ancestry",
+  "Unclassified"
+];
 
 async function getData() {
   try {
@@ -21,6 +37,7 @@ async function getData() {
     if (!res.ok) throw new Error("Failed to fetch data");
     let data = await res.json();
     hate.value = data;
+    console.log(hate.value);  
   } catch (error) {
     console.error(error);
     alert("Failed to fetch data");
@@ -28,14 +45,20 @@ async function getData() {
 }
 
 
+const filteredData = computed(() => {
+  if (selectedCategory.value === "All") {
+    return hate.value;
+  }
+ 
+  return hate.value.filter(item => item.offense_category === selectedCategory.value);
+});
 
 const OffenseWithCounts = computed(() => {
-  const OffenseCounts = hate.value.reduce((acc, item) => {
+  const OffenseCounts = filteredData.value.reduce((acc, item) => {
     const category = item.offense_description || "Unknown";
     acc[category] = (acc[category] || 0) + 1;
     return acc;
   }, {});
-
 
   const categories = Object.keys(OffenseCounts);
   const categorizedData = categories.reduce((acc, category) => {
@@ -50,10 +73,9 @@ const OffenseWithCounts = computed(() => {
 
   return Object.keys(categorizedData).map(category => ({
     offense_description: category,
-    count: categorizedData[category]
+    count: categorizedData[category],
   }));
 });
-
 
 const renderChart = () => {
   const chartData = {
@@ -63,11 +85,14 @@ const renderChart = () => {
         label: "Offense Counts",
         data: OffenseWithCounts.value.map(item => item.count),
         backgroundColor: ["#8a0017"], 
-        hoverOffset: 4
-      }
-    ]
+        hoverOffset: 4,
+      },
+    ],
   };
 
+  if (offenseChart.value) {
+    offenseChart.value.destroy(); 
+  }
 
   offenseChart.value = new Chart(document.getElementById("offenseChart"), {
     type: "bar",
@@ -90,13 +115,14 @@ const renderChart = () => {
   });
 };
 
-
+const updateChart = () => {
+  nextTick(() => renderChart());
+};
 
 onMounted(async () => {
   await getData();
-  nextTick(() => renderChart()); 
+  nextTick(() => renderChart());
 });
-
 </script>
 
 <style scoped>
@@ -105,25 +131,18 @@ canvas {
   width: 100%;     
   height: 300px;  
   margin: 0 auto;  
-  
 }
 ul {
   list-style-type: none;
-    
 }
-
 li {
   border: 1px solid #ddd;
   margin: 10px 0;
   padding: 10px;
-   
 }
-
 p {
   margin: 5px 0;
   color: rgb(168, 0, 22);
   font-size: 35px;
-    
 }
-
 </style>
