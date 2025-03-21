@@ -3,7 +3,7 @@
   <div>
     <h1>Hate Crime Data in NYC - Offense</h1>
 
-   
+   <h2>Select an Offensive Category</h2>
     <select v-model="selectedCategory" @change="updateChart">
       <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
       <option value="All">All Categories</option>
@@ -144,5 +144,15 @@ p {
   margin: 5px 0;
   color: rgb(168, 0, 22);
   font-size: 35px;
+}
+h1 {
+  color:rgb(133, 0, 11);
+  font-size: 44px;
+}
+h2 {
+  color:rgb(133, 0, 11)
+}
+h3 {
+  color:rgb(133, 0, 11)
 }
 </style>

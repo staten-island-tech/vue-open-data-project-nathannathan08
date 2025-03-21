@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Hate Crime Data in NYC</h1>
+    <h3>Contains data from 2019 to 2024</h3>
     <ul>
       <li v-for="(item, index) in offenseCategoriesWithCounts" :key="index">
         <p>Offensive Category: {{ item.category }}, Count: {{ item.count }}</p>
@@ -25,8 +26,6 @@ async function getData() {
     alert("Failed to fetch data");
   }
 }
-
-
 
 const offenseCategoriesWithCounts = computed(() => {
   const offenseCounts = hate.value.reduce((acc, item) => {
@@ -69,5 +68,9 @@ p {
 h1 {
   color:rgb(133, 0, 11);
   font-size: 44px;
+}
+
+h3 {
+  color:rgb(133, 0, 11)
 }
 </style>
